@@ -6,19 +6,19 @@ import { Link } from 'react-router-dom';
 const Tendas = () => {
   const tendas = [
     {
-      title: "Tenda Piramidal 3x3",
+      title: "Tendas 3x3",
       desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
       image: "/images/tenda20.jpeg",
       features: ["Montagem em 20min", "Capacidade: 10 pessoas"]
     },
     {
-      title: "Tenda Piramidal 4x4",
+      title: "Tendas 4x4",
       desc: "A mais versátil para festas particulares e áreas de convivência.",
       image: "/images/tenda11.jpg",
       features: ["Capacidade 25 pessoas", "Calhas de Escoamento", "Design Moderno"]
     },
     {
-      title: "Tenda Piramidal 5x5",
+      title: "Tendas 5x5",
       desc: "Estrutura robusta para grandes eventos corporativos e feiras.",
       image: "/images/tenda14.jpeg",
       features: ["Vão Livre Total", "Alta Resistência a Ventos", "Capacidade: 100 pessoas"]

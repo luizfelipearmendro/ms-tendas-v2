@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const tendas = [
     {
-      title: "Tenda Piramidal 3x3",
+      title: "Tendas 3x3",
       desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
       image: "/images/tenda13.jpg",
       features: ["Lona Anti-chamas", "Estrutura Galvanizada", "Montagem em 30min"]
@@ -106,7 +106,7 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <p className="text-sm font-bold uppercase tracking-widest mb-1 opacity-80">Destaque</p>
-                  <h3 className="text-2xl font-bold">Tendas Piramidais Premium</h3>
+                  <h3 className="text-2xl font-bold">Conte com a MS, para tornar seu evento inesquecível!</h3>
                 </div>
               </div>
               

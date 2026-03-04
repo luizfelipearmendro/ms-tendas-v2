@@ -16,9 +16,9 @@ const Contato = () => {
     e.preventDefault();
 
     // Formatação da mensagem conforme solicitado no screenshot
-    const message = `Olá, Júlio! Me chamo *${formData.nome}*. *Assunto:* ${formData.assunto} *Mensagem:* ${formData.mensagem} *Telefone:* ${formData.whatsapp}`;
-    const encodedMessage = encodeURIComponent(message);
-    const url = `https://wa.me/5565998069972?text=${encodedMessage}`; // Usando o número do screenshot ou um padrão
+    const msg = `Olá, Júlio! Me chamo *${formData.nome}*.\n\n*Assunto:* ${formData.assunto}\n\n*Mensagem:* ${formData.mensagem}\n\n*Telefone:* ${formData.whatsapp}${formData.email ? `\n*E-mail:* ${formData.email}` : ""}`;
+      
+    const url = `https://wa.me/5565999047060?text=${encodeURIComponent(msg)}`;
 
     setWhatsappUrl(url);
     setIsSubmitted(true);
