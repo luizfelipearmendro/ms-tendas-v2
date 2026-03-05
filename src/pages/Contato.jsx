@@ -132,8 +132,8 @@ const Contato = () => {
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                       >
                         <option>Orçamento — Tenda 3x3</option>
+                        <option>Orçamento — Tenda 4x4</option>
                         <option>Orçamento — Tenda 5x5</option>
-                        <option>Orçamento — Tenda 10x10</option>
                         <option>Festa Particular</option>
                         <option>Evento Corporativo</option>
                         <option>Outros</option>
