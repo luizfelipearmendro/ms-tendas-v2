@@ -1,39 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./public/favicon.ico" />
-    <title>MS Tendas</title>
 
-    <!-- Fonte Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./public/favicon.ico" />
+  <title>MS Tendas</title>
 
-    <style>
-      * {
-        font-family: 'Inter', system-ui, sans-serif;
+  <!-- Fonte Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
       }
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
+
+      50% {
+        transform: translateY(-10px);
       }
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <!-- O Vite injeta automaticamente o bundle gerado a partir do main.tsx -->
-  </body>
-  <script type="module" src="/src/main.jsx"></script>
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ms Tendas",
+      "url": "https://mstendas.com.br"
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <!-- O Vite injeta automaticamente o bundle gerado a partir do main.tsx -->
+</body>
+<script type="module" src="/src/main.jsx"></script>
+
 </html>
