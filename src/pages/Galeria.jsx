@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Galeria = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   const images = [
+    { src: "/images/tenda22.jpeg", title: "" },
+    { src: "/images/tenda23.jpeg", title: "" },
+    { src: "/images/tenda24.jpeg", title: "" },
+    { src: "/images/tenda25.jpeg", title: "" },
+    { src: "/images/tenda26.jpeg", title: "" },
+    { src: "/images/tenda27.jpeg", title: "" },
+    { src: "/images/tenda28.jpeg", title: "" },
+    { src: "/images/tenda29.jpeg", title: "" },
+    { src: "/images/tenda30.jpeg", title: "" },
+    { src: "/images/tenda31.jpeg", title: "" },
+    { src: "/images/tenda32.jpeg", title: "" },
+    { src: "/images/tenda33.jpeg", title: "" },
+    { src: "/images/tenda34.jpeg", title: "" },
+    { src: "/images/tenda35.jpeg", title: "" },
+    { src: "/images/tenda36.jpeg", title: "" },
+    { src: "/images/tenda37.jpeg", title: "" },
+    { src: "/images/tenda38.jpeg", title: "" },
+    { src: "/images/tenda39.jpeg", title: "" },
+    { src: "/images/tenda40.jpeg", title: "" },
     { src: "/images/tenda1.jpg", title: "Evento Arena Pantanal" },
     { src: "/images/tenda2.jpg", title: "Evento Arena Pantanal" },
     { src: "/images/tenda3.jpg", title: "Evento Corporativo" },
@@ -23,7 +55,7 @@ const Galeria = () => {
     { src: "/images/tenda18.jpeg", title: "Galpão Estruturado" },
     { src: "/images/tenda19.jpeg", title: "Evento Particular" },
     { src: "/images/tenda20.jpeg", title: "Festa em Condomínio" },
-    { src: "/images/tenda21.jpeg", title: "Evento Corporativo" }
+    { src: "/images/tenda21.jpeg", title: "" }
   ];
 
   return (
@@ -44,7 +76,8 @@ const Galeria = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group relative rounded-3xl overflow-hidden shadow-xl border-4 border-white"
+              onClick={() => setSelectedImage(image)}
+              className="group relative rounded-3xl overflow-hidden shadow-xl border-4 border-white cursor-pointer"
             >
               <img
                 src={image.src}
@@ -57,6 +90,41 @@ const Galeria = () => {
             </motion.div>
           ))}
         </div>
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+            >
+              <motion.img
+                src={selectedImage.src}
+                alt={selectedImage.title}
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                transition={{ duration: 0.25 }}
+                className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-6 right-6 text-white text-5xl hover:text-gray-300 transition"
+              >
+                ×
+              </button>
+
+              {selectedImage.title && (
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 px-6 py-3 rounded-xl text-white text-lg">
+                  {selectedImage.title}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
