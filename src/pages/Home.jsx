@@ -9,9 +9,14 @@ import {
   CheckCircle2,
   ChevronRight,
   CalendarCheck,
-  Tent
+  Tent,
+  Star
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+// Atualize conforme o widget de avaliações do Google
+const GOOGLE_RATING = "5,0";
+const GOOGLE_REVIEWS_COUNT = null;
 
 const Home = () => {
   const tendas = [
@@ -79,15 +84,22 @@ const Home = () => {
                 </a>
               </div>
               
-              <div className="mt-10 flex items-center gap-6 text-sm text-slate-500 font-medium">
+              <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-slate-500 font-medium">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={18} className="text-blue-600" />
                   Empresa Registrada
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-blue-600" />
-                  Suporte 24h
-                </div>
+                <a href="#avaliacoes" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+                  <span className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={16} className="text-amber-400 fill-amber-400" />
+                    ))}
+                  </span>
+                  <span>
+                    <strong className="text-slate-900">{GOOGLE_RATING}</strong> no Google
+                    {GOOGLE_REVIEWS_COUNT && <> · {GOOGLE_REVIEWS_COUNT} avaliações</>}
+                  </span>
+                </a>
               </div>
             </motion.div>
 
@@ -144,7 +156,7 @@ const Home = () => {
               {
                 icon: <ShieldCheck size={30} className="text-blue-600" />,
                 title: "Segurança Total",
-                desc: "Estruturas galvanizadas e lonas anti-chamas com laudos técnicos. Segurança em primeiro lugar para seus convidados."
+                desc: "Estruturas galvanizadas e lonas anti-chamas. Segurança em primeiro lugar para seus convidados."
               },
               {
                 icon: <DollarSign size={30} className="text-blue-600" />,
@@ -271,7 +283,7 @@ const Home = () => {
       </section>
 
       {/* GOOGLE REVIEWS */}
-      <section className="py-20 bg-white">
+      <section id="avaliacoes" className="py-20 bg-white scroll-mt-20">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Avaliações Reais</h2>
           <p className="text-4xl font-extrabold text-slate-900 mb-6">O que nossos clientes dizem?</p>
@@ -288,7 +300,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-8">Pronto para elevar o nível do seu evento?</h2>
           <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
-            Entre em contato agora e receba um orçamento personalizado em menos de 15 minutos.
+            Entre em contato agora e receba um orçamento personalizado para o seu evento.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 

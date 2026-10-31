@@ -13,7 +13,7 @@ const Footer = () => {
               <span className="text-2xl font-bold tracking-tight text-white">Tendas</span>
             </div>
             <p className="text-slate-400 max-w-md mb-8 leading-relaxed">
-              Líder em estruturas para eventos em Cuiabá e região. Tendas piramidais de alta qualidade para festas, feiras e eventos corporativos.
+              Estruturas para eventos em Cuiabá e região. Tendas piramidais de alta qualidade para festas, feiras e eventos corporativos.
             </p>
             <div className="flex gap-4">
               <a href="https://wa.me/5565999047060" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">

@@ -62,7 +62,7 @@ const Contato = () => {
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">Solicitar Orçamento</h1>
           <p className="text-xl text-slate-600 leading-relaxed">
-            Preencha o formulário abaixo e nossa equipe entrará em contato em menos de 15 minutos com a melhor proposta.
+            Preencha o formulário abaixo e nossa equipe entrará em contato o quanto antes com a melhor proposta.
           </p>
         </div>
 
