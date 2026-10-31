@@ -1,15 +1,13 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Zap,
-  ShieldCheck,
-  DollarSign,
-  ArrowRight,
-  MessageCircle,
+import { motion } from 'framer-motion';
+import { 
+  Zap, 
+  ShieldCheck, 
+  DollarSign, 
+  ArrowRight, 
+  MessageCircle, 
   CheckCircle2,
-  ChevronRight,
-  Star,
-  Clock
+  ChevronRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -19,13 +17,13 @@ const Home = () => {
       title: "Tendas 3x3",
       desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
       image: "/images/tenda13.jpg",
-      features: ["Lona Anti-chamas", "Estrutura Galvanizada", "Montagem em 30min"]
+      features: ["Lona Anti-chamas", "Estrutura Galvanizada", "Montagem Rápida"]
     },
     {
       title: "Tendas 4x4",
       desc: "A mais versátil para festas particulares e áreas de convivência.",
       image: "/images/tenda17.jpg",
-      features: ["Capacidade 25 pessoas", "Calhas de Escoamento", "Design Moderno"]
+      features: ["Ótima para Festas e Confraternizações", "Calhas de Escoamento", "Design Moderno"]
     },
     {
       title: "Tendas 5x5",
@@ -40,13 +38,12 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-transparent to-transparent opacity-70"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-transparent to-transparent opacity-70"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -62,23 +59,24 @@ const Home = () => {
                 Tendas piramidais de alta resistência para grandes empresas e festas particulares em Cuiabá. Agilidade, segurança e o melhor custo-benefício.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/contato"
+                <Link 
+                  to="/contato" 
                   className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 group"
                 >
                   Orçamento Rápido
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a
-                  href="https://wa.me/5565999047060"
+                <a 
+                  href="https://wa.me/5565999047060" 
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-white text-slate-900 border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition-all"
                 >
                   <MessageCircle className="text-green-500" />
                   Falar no WhatsApp
                 </a>
               </div>
-
+              
               <div className="mt-10 flex items-center gap-6 text-sm text-slate-500 font-medium">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={18} className="text-blue-600" />
@@ -91,25 +89,25 @@ const Home = () => {
               </div>
             </motion.div>
 
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                <img
-                  src="/images/tenda2.jpg"
-                  alt="Tenda Piramidal MS Tendas"
+                <img 
+                  src="/images/tenda2.jpg" 
+                  alt="Tenda Piramidal MS Tendas" 
                   className="w-full h-[500px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="absolute bottom-6 sm:bottom-20 left-6 right-6 text-white">
                   <p className="text-sm font-bold uppercase tracking-widest mb-1 opacity-80">Destaque</p>
                   <h3 className="text-2xl font-bold">Conte com a MS, para tornar seu evento inesquecível!</h3>
                 </div>
               </div>
-
+              
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl border border-slate-100 hidden sm:block">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
@@ -152,7 +150,7 @@ const Home = () => {
                 desc: "Trabalhamos com transparência e os melhores preços da região, sem abrir mão da qualidade premium."
               }
             ].map((feature, i) => (
-              <motion.div
+              <motion.div 
                 key={i}
                 whileHover={{ y: -10 }}
                 className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-xl transition-all"
@@ -183,7 +181,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {tendas.map((tenda, i) => (
-              <motion.div
+              <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -192,17 +190,26 @@ const Home = () => {
                 className="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100"
               >
                 <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={tenda.image}
+                  <img 
+                    src={tenda.image} 
                     alt={tenda.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-slate-900 mb-3">{tenda.title}</h3>
                   <p className="text-slate-600 mb-6 text-sm leading-relaxed">{tenda.desc}</p>
-                  <Link
-                    to="/contato"
+                  <ul className="space-y-2 mb-8">
+                    {tenda.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                        <CheckCircle2 size={16} className="text-green-500 shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link 
+                    to="/contato" 
                     className="block w-full text-center py-4 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition-all"
                   >
                     Solicitar Preço
@@ -221,30 +228,30 @@ const Home = () => {
           <p className="text-4xl font-extrabold text-slate-900 mb-6">O que nossos clientes dizem?</p>
         </div>
         <div className="max-w-6xl mx-auto">
-          <div class="elfsight-app-6d90414c-6778-4e36-9c24-4aa0362d68eb" data-elfsight-app-lazy></div>
+          <div className="elfsight-app-6d90414c-6778-4e36-9c24-4aa0362d68eb" data-elfsight-app-lazy></div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-24 bg-blue-600 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        </div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500 rounded-full opacity-40 blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-800 rounded-full opacity-40 blur-3xl"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-8">Pronto para elevar o nível do seu evento?</h2>
           <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
             Entre em contato agora e receba um orçamento personalizado em menos de 15 minutos.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              to="/contato"
+            <Link 
+              to="/contato" 
               className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-50 transition-all shadow-2xl"
             >
               Solicitar Orçamento
             </Link>
-            <a
-              href="https://wa.me/5565999047060"
+            <a 
+              href="https://wa.me/5565999047060" 
               target="_blank"
+                  rel="noopener noreferrer"
               className="bg-green-500 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-2xl flex items-center justify-center gap-3"
             >
               <MessageCircle size={28} />

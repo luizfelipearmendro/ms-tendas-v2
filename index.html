@@ -1,53 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>MS Tendas | Aluguel de Tendas em Cuiabá - MT</title>
+    <meta
+      name="description"
+      content="Aluguel de tendas piramidais 3x3, 4x4 e 5x5 em Cuiabá e região. Montagem no mesmo dia para festas, feiras e eventos corporativos. Peça seu orçamento pelo WhatsApp."
+    />
+    <meta name="theme-color" content="#2563eb" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./public/favicon.ico" />
-  <title>MS Tendas</title>
+    <!-- Open Graph (prévia de link no WhatsApp/redes sociais) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mstendas.com.br/" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="MS Tendas" />
+    <meta property="og:title" content="MS Tendas | Aluguel de Tendas em Cuiabá - MT" />
+    <meta
+      property="og:description"
+      content="Tendas piramidais para festas, feiras e eventos corporativos. Montagem no mesmo dia em Cuiabá e região."
+    />
+    <meta property="og:image" content="https://mstendas.com.br/images/tenda2.jpg" />
 
-  <!-- Fonte Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    * {
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    @keyframes float {
-      0%,
-      100% {
-        transform: translateY(0);
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "MS Tendas",
+        "url": "https://mstendas.com.br/",
+        "description": "Aluguel de tendas piramidais para eventos em Cuiabá e região.",
+        "image": "https://mstendas.com.br/images/tenda2.jpg",
+        "telephone": "+55-65-99904-7060",
+        "email": "mstendas2016@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cuiabá",
+          "addressRegion": "MT",
+          "addressCountry": "BR"
+        },
+        "areaServed": "Cuiabá e região"
       }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-  </style>
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ms Tendas",
-      "url": "https://mstendas.com.br"
-    }
     </script>
-</head>
 
-<body>
-  <div id="root"></div>
-  <!-- O Vite injeta automaticamente o bundle gerado a partir do main.tsx -->
-</body>
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<script type="module" src="/src/main.jsx"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MS Tendas",
+        "url": "https://mstendas.com.br"
+      }
+    </script>
 
+    <!-- Fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

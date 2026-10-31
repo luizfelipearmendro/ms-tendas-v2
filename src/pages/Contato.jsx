@@ -14,9 +14,7 @@ const Contato = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Formatação da mensagem conforme solicitado no screenshot
-    const msg = `Olá, Júlio! Me chamo *${formData.nome}*.\n\n*Assunto:* ${formData.assunto}\n\n*Mensagem:* ${formData.mensagem}\n\n*Telefone:* ${formData.whatsapp}${formData.email ? `\n*E-mail:* ${formData.email}` : ""}`;
+    const msg = `Olá, Júlio! Me chamo *${formData.nome}*.\n\n*Assunto:* ${formData.assunto}\n\n*Mensagem:* ${formData.mensagem}\n\n*Telefone:* ${formData.whatsapp}`;
       
     const url = `https://wa.me/5565999047060?text=${encodeURIComponent(msg)}`;
 
@@ -24,7 +22,7 @@ const Contato = () => {
     setIsSubmitted(true);
 
     // Abre o WhatsApp automaticamente
-    window.open(url, '_blank');
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const formatPhone = (value) => {
@@ -93,11 +91,12 @@ const Contato = () => {
                   >
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                        <label htmlFor="nome" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
                           Seu nome <span className="text-red-500">*</span>
                         </label>
                         <input
                           required
+                          id="nome"
                           name="nome"
                           value={formData.nome}
                           onChange={handleChange}
@@ -107,11 +106,12 @@ const Contato = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                        <label htmlFor="whatsapp" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
                           Telefone / WhatsApp <span className="text-red-500">*</span>
                         </label>
                         <input
                           required
+                          id="whatsapp"
                           name="whatsapp"
                           value={formData.whatsapp}
                           onChange={handleChange}
@@ -122,11 +122,12 @@ const Contato = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                      <label htmlFor="assunto" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
                         Assunto / Tipo de Evento <span className="text-red-500">*</span>
                       </label>
                       <select
-                        name="assunto"
+                        id="assunto"
+                          name="assunto"
                         value={formData.assunto}
                         onChange={handleChange}
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
@@ -140,13 +141,14 @@ const Contato = () => {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                      <label htmlFor="mensagem" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
                         Mensagem <span className="text-red-500">*</span>
                         <span className="text-xs text-slate-400 lowercase font-normal">{formData.mensagem.length} caracteres</span>
                       </label>
                       <textarea
                         required
-                        name="mensagem"
+                        id="mensagem"
+                          name="mensagem"
                         value={formData.mensagem}
                         onChange={handleChange}
                         rows={4}
@@ -182,6 +184,7 @@ const Contato = () => {
                       <a
                         href={whatsappUrl}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-green-700 transition-all flex items-center justify-center gap-2"
                       >
                         <MessageCircle size={20} />
@@ -216,8 +219,8 @@ const Contato = () => {
                   </div>
                   <div>
                     <p className="text-slate-500 text-sm font-bold uppercase">Telefone / WhatsApp</p>
-                    <p className="text-slate-900 font-extrabold text-xl">(65) 99904-7060</p>
-                    <p className="text-slate-900 font-extrabold text-xl">(65) 99208-7365</p>
+                    <a href="tel:+5565999047060" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">(65) 99904-7060</a>
+                    <a href="tel:+5565992087365" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">(65) 99208-7365</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
@@ -226,7 +229,7 @@ const Contato = () => {
                   </div>
                   <div>
                     <p className="text-slate-500 text-sm font-bold uppercase">E-mail</p>
-                    <p className="text-slate-900 font-extrabold text-xl">mstendas2016@gmail.com</p>
+                    <a href="mailto:mstendas2016@gmail.com" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors break-all">mstendas2016@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
@@ -250,10 +253,10 @@ const Contato = () => {
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
                     <div className="w-12 h-12 rounded-full border-4 border-blue-900 bg-slate-200 overflow-hidden">
-                      <img src="/images/marcos.jpeg" alt="Atendente" />
+                      <img src="/images/marcos.jpeg" alt="Marcos, da equipe MS Tendas" />
                     </div>
                     <div className="w-12 h-12 rounded-full border-4 border-blue-900 bg-slate-200 overflow-hidden">
-                      <img src="/images/julio.jpeg" alt="Atendente" />
+                      <img src="/images/julio.jpeg" alt="Júlio, da equipe MS Tendas" />
                     </div>
                   </div>
                   <p className="text-sm font-medium text-blue-100">Equipe de prontidão</p>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mstendas.com.br/sitemap.xml

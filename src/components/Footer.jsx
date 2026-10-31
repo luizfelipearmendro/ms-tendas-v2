@@ -16,7 +16,7 @@ const Footer = () => {
               Líder em estruturas para eventos em Cuiabá e região. Tendas piramidais de alta qualidade para festas, feiras e eventos corporativos.
             </p>
             <div className="flex gap-4">
-              <a href="https://wa.me/5565999047060" target="_blank" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="https://wa.me/5565999047060" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                 <MessageCircle size={24} />
               </a>
             </div>
@@ -37,15 +37,15 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-500" />
-                (65) 99904-7060
+                <a href="tel:+5565999047060" className="hover:text-blue-500 transition-colors">(65) 99904-7060</a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-500" />
-                (65) 99208-7365
+                <a href="tel:+5565992087365" className="hover:text-blue-500 transition-colors">(65) 99208-7365</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-blue-500" />
-                mstendas2016@gmail.com
+                <a href="mailto:mstendas2016@gmail.com" className="hover:text-blue-500 transition-colors">mstendas2016@gmail.com</a>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin size={18} className="text-blue-500" />
@@ -56,7 +56,7 @@ const Footer = () => {
         </div>
         
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p>© 2026 MS Tendas Ltda. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} MS Tendas Ltda. Todos os direitos reservados.</p>
           <p>CNPJ: 28.100.559/0001-02</p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -9,19 +9,19 @@ const Tendas = () => {
       title: "Tendas 3x3",
       desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
       image: "/images/tenda20.jpeg",
-      features: ["Montagem em 20min", "Capacidade: 10 pessoas"]
+      features: ["Montagem Rápida", "Estrutura Galvanizada", "Ideal para Espaços Compactos"]
     },
     {
       title: "Tendas 4x4",
       desc: "A mais versátil para festas particulares e áreas de convivência.",
       image: "/images/tenda11.jpg",
-      features: ["Capacidade 25 pessoas", "Calhas de Escoamento", "Design Moderno"]
+      features: ["Ótima para Festas e Confraternizações", "Calhas de Escoamento", "Design Moderno"]
     },
     {
       title: "Tendas 5x5",
       desc: "Estrutura robusta para grandes eventos corporativos e feiras.",
       image: "/images/tenda14.jpeg",
-      features: ["Vão Livre Total", "Alta Resistência a Ventos", "Capacidade: 100 pessoas"]
+      features: ["Vão Livre Total", "Alta Resistência a Ventos", "Comporta Grandes Públicos"]
     }
   ];
 
@@ -35,7 +35,7 @@ const Tendas = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tendas.map((tenda, i) => (
             <motion.div 
               key={i}
@@ -43,23 +43,24 @@ const Tendas = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 flex flex-col lg:flex-row"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 flex flex-col group"
             >
-              <div className="lg:w-1/2 h-64 lg:h-auto overflow-hidden">
+              <div className="h-64 overflow-hidden">
                 <img 
                   src={tenda.image} 
                   alt={tenda.title}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <div className="p-8 lg:w-1/2 flex flex-col justify-between">
+              <div className="p-8 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">{tenda.title}</h3>
                   <p className="text-slate-600 mb-6 text-sm leading-relaxed">{tenda.desc}</p>
                   <ul className="grid grid-cols-1 gap-3 mb-8">
-                    {tenda.features.map((f, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                        <CheckCircle2 size={16} className="text-green-500" />
+                    {tenda.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                        <CheckCircle2 size={16} className="text-green-500 shrink-0" />
                         {f}
                       </li>
                     ))}
@@ -67,10 +68,10 @@ const Tendas = () => {
                 </div>
                 <Link 
                   to="/contato" 
-                  className="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all group"
+                  className="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all group/btn"
                 >
                   Solicitar Orçamento
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </motion.div>
