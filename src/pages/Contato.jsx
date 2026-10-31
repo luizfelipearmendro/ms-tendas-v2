@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle2, RefreshCcw } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, CheckCircle2, RefreshCcw } from 'lucide-react';
 
 const Contato = () => {
   const [formData, setFormData] = useState({

@@ -4,8 +4,16 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById('root')
+const app = (
   <BrowserRouter>
     <App />
   </BrowserRouter>
 )
+
+// Páginas pré-renderizadas no build são hidratadas; no `npm run dev` o root vem vazio
+if (root.hasChildNodes()) {
+  ReactDOM.hydrateRoot(root, app)
+} else {
+  ReactDOM.createRoot(root).render(app)
+}
