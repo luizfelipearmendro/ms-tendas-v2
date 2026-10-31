@@ -91,7 +91,7 @@ const Contato = () => {
                   >
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label htmlFor="nome" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                        <label htmlFor="nome" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
                           Seu nome <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -106,7 +106,7 @@ const Contato = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label htmlFor="whatsapp" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                        <label htmlFor="whatsapp" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
                           Telefone / WhatsApp <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -122,7 +122,7 @@ const Contato = () => {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="assunto" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                      <label htmlFor="assunto" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
                         Assunto / Tipo de Evento <span className="text-red-500">*</span>
                       </label>
                       <select
@@ -141,9 +141,9 @@ const Contato = () => {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="mensagem" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex justify-between">
+                      <label htmlFor="mensagem" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
                         Mensagem <span className="text-red-500">*</span>
-                        <span className="text-xs text-slate-400 lowercase font-normal">{formData.mensagem.length} caracteres</span>
+                        <span className="ml-auto text-xs text-slate-400 lowercase font-normal tracking-normal">{formData.mensagem.length} caracteres</span>
                       </label>
                       <textarea
                         required
