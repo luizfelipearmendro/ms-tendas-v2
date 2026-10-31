@@ -238,7 +238,7 @@ const Contato = () => {
                   </div>
                   <div>
                     <p className="text-slate-500 text-sm font-bold uppercase">Localização</p>
-                    <p className="text-slate-900 font-extrabold text-xl">Cuiabá - MT</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=MS+Tendas+R.+Nova+Andradina+130+Cuiab%C3%A1" target="_blank" rel="noopener noreferrer" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">R. Nova Andradina, 130<span className="block text-base font-semibold text-slate-600">Jd. Presidente I, Cuiabá - MT, 78090-130</span></a>
                   </div>
                 </div>
               </div>

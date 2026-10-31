@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 // Atualize conforme o widget de avaliações do Google
 const GOOGLE_RATING = "5,0";
-const GOOGLE_REVIEWS_COUNT = null;
+const GOOGLE_REVIEWS_COUNT = 154;
 
 const Home = () => {
   const tendas = [

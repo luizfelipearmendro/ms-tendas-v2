@@ -49,7 +49,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <MapPin size={18} className="text-blue-500" />
-                Cuiabá - MT
+                <a href="https://www.google.com/maps/search/?api=1&query=MS+Tendas+R.+Nova+Andradina+130+Cuiab%C3%A1" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">R. Nova Andradina, 130 - Jd. Presidente I, Cuiabá - MT</a>
               </li>
             </ul>
           </div>
