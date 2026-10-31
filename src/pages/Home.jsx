@@ -7,7 +7,9 @@ import {
   ArrowRight, 
   MessageCircle, 
   CheckCircle2,
-  ChevronRight
+  ChevronRight,
+  CalendarCheck,
+  Tent
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -135,17 +137,17 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Zap className="text-blue-600" />,
+                icon: <Zap size={30} className="text-blue-600" />,
                 title: "Montagem Express",
                 desc: "Nossa equipe é treinada para montagens rápidas e seguras, garantindo que sua estrutura esteja pronta no mesmo dia."
               },
               {
-                icon: <ShieldCheck className="text-blue-600" />,
+                icon: <ShieldCheck size={30} className="text-blue-600" />,
                 title: "Segurança Total",
                 desc: "Estruturas galvanizadas e lonas anti-chamas com laudos técnicos. Segurança em primeiro lugar para seus convidados."
               },
               {
-                icon: <DollarSign className="text-blue-600" />,
+                icon: <DollarSign size={30} className="text-blue-600" />,
                 title: "Preço Justo",
                 desc: "Trabalhamos com transparência e os melhores preços da região, sem abrir mão da qualidade premium."
               }
@@ -155,7 +157,7 @@ const Home = () => {
                 whileHover={{ y: -10 }}
                 className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-xl transition-all"
               >
-                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6">
+                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-4">{feature.title}</h3>
@@ -215,6 +217,53 @@ const Home = () => {
                     Solicitar Preço
                   </Link>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Como Funciona */}
+      <section className="py-24 bg-slate-900 relative overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-600 rounded-full opacity-20 blur-3xl"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-blue-400 font-bold tracking-widest uppercase text-sm mb-4">Como Funciona</h2>
+            <p className="text-4xl font-extrabold text-white">Do orçamento à montagem, sem complicação.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <MessageCircle size={30} />,
+                title: "Peça seu orçamento",
+                desc: "Fale com a gente pelo WhatsApp ou pelo formulário e conte como será o seu evento."
+              },
+              {
+                icon: <CalendarCheck size={30} />,
+                title: "Combine data e local",
+                desc: "Definimos juntos a medida ideal da tenda, o dia e o endereço da montagem."
+              },
+              {
+                icon: <Tent size={30} />,
+                title: "Nós montamos tudo",
+                desc: "Nossa equipe chega no horário combinado e deixa a estrutura pronta para o seu evento."
+              }
+            ].map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative p-8 rounded-3xl bg-white/5 border border-white/10"
+              >
+                <span className="absolute top-6 right-8 text-6xl font-black text-white/10">{i + 1}</span>
+                <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-6">
+                  {step.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
+                <p className="text-slate-400 leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>

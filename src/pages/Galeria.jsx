@@ -132,11 +132,12 @@ const Galeria = () => {
             >
               <ChevronLeft size={32} />
             </button>
-            <figure className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <figure className="max-w-5xl w-full flex flex-col items-center">
               <img
                 src={images[selected].src}
                 alt={images[selected].title || "Tenda montada pela MS Tendas"}
-                className="w-full max-h-[80vh] object-contain rounded-2xl"
+                className="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
               />
               <figcaption className="text-white text-center mt-4 font-semibold">
                 {images[selected].title}
