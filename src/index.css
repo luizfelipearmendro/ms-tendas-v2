@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  h1, h2, h3 {
+    font-variation-settings: "opsz" 96;
+  }
+
+  ::selection {
+    @apply bg-lona text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-coral ring-offset-2 ring-offset-paper;
+  }
+}

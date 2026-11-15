@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { MotionConfig } from 'framer-motion'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import RouteEffects from './components/RouteEffects'
@@ -11,23 +12,25 @@ import NotFound from './pages/NotFound'
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <RouteEffects />
-      <Header />
+    <MotionConfig reducedMotion="user">
+      <div className="flex flex-col min-h-screen">
+        <RouteEffects />
+        <Header />
 
-      <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tendas" element={<Tendas />} />
-          <Route path="/galeria" element={<Galeria />} />
-          <Route path="/contato" element={<Contato />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tendas" element={<Tendas />} />
+            <Route path="/galeria" element={<Galeria />} />
+            <Route path="/contato" element={<Contato />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
 
-      <Footer />
-      <WhatsAppButton />
-    </div>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    </MotionConfig>
   )
 }
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Expand } from 'lucide-react';
+import PageHero from '../components/PageHero';
+import TriangleReveal from '../components/motion/TriangleReveal';
 
 const images = [
   { src: "/images/tenda22.jpeg", title: "" },
@@ -45,6 +47,8 @@ const images = [
   { src: "/images/tenda21.jpeg", title: "" }
 ];
 
+const fallbackAlt = 'Tenda montada pela MS Tendas';
+
 const Galeria = () => {
   const [selected, setSelected] = useState(null);
 
@@ -69,41 +73,40 @@ const Galeria = () => {
   }, [selected]);
 
   return (
-    <div className="pt-32 pb-24 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">Galeria de Fotos</h1>
-          <p className="text-xl text-slate-600 leading-relaxed">
-            Confira alguns de nossos projetos realizados em Cuiabá e região. Qualidade e agilidade em cada montagem.
-          </p>
-        </div>
+    <>
+      <PageHero
+        eyebrow={`${images.length} fotos`}
+        title="Galeria de Fotos"
+        subtitle="Confira alguns de nossos projetos realizados em Cuiabá e região. Qualidade e agilidade em cada montagem."
+      />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="mx-auto max-w-7xl px-5 pb-32 sm:px-8">
+        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
           {images.map((image, i) => (
-            <motion.button
-              key={image.src}
-              type="button"
-              onClick={() => setSelected(i)}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: (i % 3) * 0.1 }}
-              className="group relative rounded-3xl overflow-hidden shadow-xl border-4 border-white text-left cursor-zoom-in"
-              aria-label={`Ampliar foto: ${image.title || "MS Tendas"}`}
-            >
-              <img
-                src={image.src}
-                alt={image.title || "Tenda montada pela MS Tendas"}
-                loading="lazy"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                <h3 className="text-white font-bold text-xl">{image.title}</h3>
-              </div>
-            </motion.button>
+            <TriangleReveal key={image.src} delay={(i % 3) * 0.1} className="mb-5 break-inside-avoid">
+              <button
+                type="button"
+                onClick={() => setSelected(i)}
+                className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[1.75rem] text-left"
+                aria-label={`Ampliar foto: ${image.title || 'MS Tendas'}`}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title || fallbackAlt}
+                  loading="lazy"
+                  className="h-auto w-full transition-transform duration-700 ease-out-expo group-hover:scale-105"
+                />
+                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-ink/75 to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <span className="font-display text-lg font-bold text-white">{image.title}</span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-lona">
+                    <Expand size={18} />
+                  </span>
+                </span>
+              </button>
+            </TriangleReveal>
           ))}
         </div>
-      </div>
+      </section>
 
       <AnimatePresence>
         {selected !== null && (
@@ -112,50 +115,57 @@ const Galeria = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
-            className="fixed inset-0 z-[60] bg-slate-950/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-ink/95 p-4"
             role="dialog"
             aria-modal="true"
           >
             <button
               type="button"
               onClick={() => setSelected(null)}
-              className="absolute top-4 right-4 p-3 text-white/80 hover:text-white"
+              className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-ink"
               aria-label="Fechar"
             >
-              <X size={32} />
+              <X size={24} />
             </button>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); showPrev(); }}
-              className="absolute left-2 md:left-6 p-3 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full"
+              className="absolute left-2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-ink md:left-6"
               aria-label="Foto anterior"
             >
-              <ChevronLeft size={32} />
+              <ChevronLeft size={24} />
             </button>
-            <figure className="max-w-5xl w-full flex flex-col items-center">
-              <img
-                src={images[selected].src}
-                alt={images[selected].title || "Tenda montada pela MS Tendas"}
-                className="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <figcaption className="text-white text-center mt-4 font-semibold">
-                {images[selected].title}
-                <span className="text-white/50 font-normal ml-3">{selected + 1} / {images.length}</span>
+            <figure className="flex w-full max-w-5xl flex-col items-center">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={images[selected].src}
+                  src={images[selected].src}
+                  alt={images[selected].title || fallbackAlt}
+                  initial={{ opacity: 0, clipPath: 'polygon(50% 0%, 50% 0%, 100% 100%, 0% 100%)' }}
+                  animate={{ opacity: 1, clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-auto max-h-[80vh] w-auto max-w-full rounded-[1.5rem]"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </AnimatePresence>
+              <figcaption className="mt-5 flex items-center gap-4 text-white">
+                {images[selected].title && <span className="font-display text-lg font-bold">{images[selected].title}</span>}
+                <span className="text-sm text-white/50">{selected + 1} / {images.length}</span>
               </figcaption>
             </figure>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); showNext(); }}
-              className="absolute right-2 md:right-6 p-3 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full"
+              className="absolute right-2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-ink md:right-6"
               aria-label="Próxima foto"
             >
-              <ChevronRight size={32} />
+              <ChevronRight size={24} />
             </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

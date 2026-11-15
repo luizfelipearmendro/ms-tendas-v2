@@ -1,18 +1,24 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { getWhatsAppUrl } from '../config/site';
 
 const WhatsAppButton = () => {
   return (
-    <a
-      href="https://wa.me/5565999047060"
+    <motion.a
+      href={getWhatsAppUrl('Olá! Vim pelo site e gostaria de um orçamento de tenda.')}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
-      className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 hover:bg-green-600 hover:scale-110 transition-all"
+      initial={{ y: 80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 1.5, type: 'spring', stiffness: 220, damping: 20 }}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.95 }}
+      className="fixed bottom-5 right-5 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-ink shadow-lg shadow-[#25D366]/40"
     >
-      <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></span>
-      <MessageCircle size={32} className="relative" />
-    </a>
+      <MessageCircle size={30} />
+    </motion.a>
   );
 };
 

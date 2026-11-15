@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Mail, MapPin, MessageCircle, CheckCircle2, RefreshCcw } from 'lucide-react';
+import PageHero from '../components/PageHero';
+import Button from '../components/Button';
+import { getWhatsAppUrl } from '../config/site';
+
+const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=MS+Tendas+R.+Nova+Andradina+130+Cuiab%C3%A1';
+
+const inputClass =
+  'w-full rounded-2xl border border-ink/10 bg-paper px-5 py-4 text-ink placeholder:text-ink/35 outline-none transition-all focus:border-lona focus:bg-white focus:ring-4 focus:ring-lona/15';
+
+const labelClass = 'flex items-center gap-1 text-xs font-bold uppercase tracking-[0.15em] text-ink/70';
 
 const Contato = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +25,7 @@ const Contato = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const msg = `Olá, Júlio! Me chamo *${formData.nome}*.\n\n*Assunto:* ${formData.assunto}\n\n*Mensagem:* ${formData.mensagem}\n\n*Telefone:* ${formData.whatsapp}`;
-      
-    const url = `https://wa.me/5565999047060?text=${encodeURIComponent(msg)}`;
+    const url = getWhatsAppUrl(msg);
 
     setWhatsappUrl(url);
     setIsSubmitted(true);
@@ -56,218 +65,228 @@ const Contato = () => {
     }));
   };
 
+  const contacts = [
+    {
+      icon: Phone,
+      label: 'Telefone / WhatsApp',
+      lines: [
+        { text: '(65) 99904-7060', href: 'tel:+5565999047060' },
+        { text: '(65) 99208-7365', href: 'tel:+5565992087365' },
+      ],
+    },
+    {
+      icon: Mail,
+      label: 'E-mail',
+      lines: [{ text: 'mstendas2016@gmail.com', href: 'mailto:mstendas2016@gmail.com' }],
+    },
+    {
+      icon: MapPin,
+      label: 'Endereço',
+      lines: [{ text: 'R. Nova Andradina, 130 - Jd. Presidente I, Cuiabá - MT, 78090-130', href: MAPS_URL, external: true }],
+    },
+  ];
+
   return (
-    <div className="pt-32 pb-24 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">Solicitar Orçamento</h1>
-          <p className="text-xl text-slate-600 leading-relaxed">
-            Preencha o formulário abaixo e nossa equipe entrará em contato o quanto antes com a melhor proposta.
-          </p>
-        </div>
+    <>
+      <PageHero
+        eyebrow="Contato"
+        title="Vamos montar seu evento?"
+        subtitle="Preencha o formulário e nossa equipe entrará em contato o quanto antes com a melhor proposta."
+      />
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden"
-          >
-            <div className="bg-blue-600 p-8 text-white">
-              <h2 className="text-2xl font-bold mb-2">Envie sua mensagem</h2>
-              <p className="text-blue-100 opacity-90">Preencha o formulário e enviaremos direto para o WhatsApp!</p>
-            </div>
+      <section className="mx-auto grid max-w-7xl items-start gap-10 px-5 pb-32 sm:px-8 lg:grid-cols-12 lg:gap-16">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="overflow-hidden rounded-[2rem] bg-white shadow-[0_40px_80px_-40px_rgba(12,15,20,0.35)] lg:col-span-7"
+        >
+          <div className="p-8 sm:p-10">
+            <AnimatePresence mode="wait">
+              {!isSubmitted ? (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  <div>
+                    <h2 className="font-display text-3xl font-extrabold tracking-tight">Envie sua mensagem</h2>
+                    <p className="mt-2 text-ink/60">A mensagem vai pronta direto para o nosso WhatsApp.</p>
+                  </div>
 
-            <div className="p-10">
-              <AnimatePresence mode="wait">
-                {!isSubmitted ? (
-                  <motion.form
-                    key="form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onSubmit={handleSubmit}
-                    className="space-y-6"
-                  >
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="nome" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-                          Seu nome <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          required
-                          id="nome"
-                          name="nome"
-                          value={formData.nome}
-                          onChange={handleChange}
-                          type="text"
-                          className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                          placeholder="Ex: Júlio Armendro"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="whatsapp" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-                          Telefone / WhatsApp <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          required
-                          id="whatsapp"
-                          name="whatsapp"
-                          value={formData.whatsapp}
-                          onChange={handleChange}
-                          type="tel"
-                          className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                          placeholder="(65) 99904-7060"
-                        />
-                      </div>
-                    </div>
+                  <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
-                      <label htmlFor="assunto" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-                        Assunto / Tipo de Evento <span className="text-red-500">*</span>
+                      <label htmlFor="nome" className={labelClass}>
+                        Seu nome <span className="text-lona">*</span>
                       </label>
-                      <select
-                        id="assunto"
-                          name="assunto"
-                        value={formData.assunto}
-                        onChange={handleChange}
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                      >
-                        <option>Orçamento — Tenda 3x3</option>
-                        <option>Orçamento — Tenda 4x4</option>
-                        <option>Orçamento — Tenda 5x5</option>
-                        <option>Festa Particular</option>
-                        <option>Evento Corporativo</option>
-                        <option>Outros</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="mensagem" className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-                        Mensagem <span className="text-red-500">*</span>
-                        <span className="ml-auto text-xs text-slate-400 lowercase font-normal tracking-normal">{formData.mensagem.length} caracteres</span>
-                      </label>
-                      <textarea
+                      <input
                         required
-                        id="mensagem"
-                          name="mensagem"
-                        value={formData.mensagem}
+                        id="nome"
+                        name="nome"
+                        value={formData.nome}
                         onChange={handleChange}
-                        rows={4}
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                        placeholder="Descreva seu evento ou as medidas que precisa"
-                      ></textarea>
+                        type="text"
+                        className={inputClass}
+                        placeholder="Ex: Júlio Armendro"
+                      />
                     </div>
-                    <div className="pt-4">
-                      <button type="submit" className="w-full bg-green-600 text-white py-5 rounded-2xl font-black text-xl hover:bg-green-700 transition-all shadow-xl shadow-green-100 flex items-center justify-center gap-3">
-                        <MessageCircle size={24} />
+                    <div className="space-y-2">
+                      <label htmlFor="whatsapp" className={labelClass}>
+                        Telefone / WhatsApp <span className="text-lona">*</span>
+                      </label>
+                      <input
+                        required
+                        id="whatsapp"
+                        name="whatsapp"
+                        value={formData.whatsapp}
+                        onChange={handleChange}
+                        type="tel"
+                        className={inputClass}
+                        placeholder="(65) 99904-7060"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="assunto" className={labelClass}>
+                      Assunto / Tipo de Evento <span className="text-lona">*</span>
+                    </label>
+                    <select
+                      id="assunto"
+                      name="assunto"
+                      value={formData.assunto}
+                      onChange={handleChange}
+                      className={inputClass}
+                    >
+                      <option>Orçamento — Tenda 3x3</option>
+                      <option>Orçamento — Tenda 4x4</option>
+                      <option>Orçamento — Tenda 5x5</option>
+                      <option>Festa Particular</option>
+                      <option>Evento Corporativo</option>
+                      <option>Outros</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="mensagem" className={labelClass}>
+                      Mensagem <span className="text-lona">*</span>
+                      <span className="ml-auto text-xs font-normal normal-case tracking-normal text-ink/40">
+                        {formData.mensagem.length} caracteres
+                      </span>
+                    </label>
+                    <textarea
+                      required
+                      id="mensagem"
+                      name="mensagem"
+                      value={formData.mensagem}
+                      onChange={handleChange}
+                      rows={4}
+                      className={inputClass}
+                      placeholder="Descreva seu evento ou as medidas que precisa"
+                    ></textarea>
+                  </div>
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      className="group relative isolate flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[#25D366] py-5 text-lg font-bold text-ink"
+                    >
+                      <span className="absolute inset-0 -z-10 translate-y-[101%] bg-ink transition-transform duration-500 ease-out-expo group-hover:translate-y-0" />
+                      <span className="flex items-center gap-3 transition-colors duration-300 group-hover:text-white">
+                        <MessageCircle size={22} />
                         Enviar pelo WhatsApp
-                      </button>
-                      <p className="text-center text-slate-400 text-sm mt-4">
-                        Ao enviar, o WhatsApp será aberto com sua mensagem pronta para envio.
-                      </p>
-                    </div>
-                  </motion.form>
-                ) : (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-10"
-                  >
-                    <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                      <CheckCircle2 size={48} />
-                    </div>
-                    <h3 className="text-3xl font-black text-slate-900 mb-4">Mensagem enviada!</h3>
-                    <p className="text-slate-600 text-lg mb-10 max-w-xs mx-auto">
-                      O WhatsApp foi aberto com sua mensagem pronta. Caso não tenha aberto, clique no botão abaixo.
+                      </span>
+                    </button>
+                    <p className="mt-4 text-center text-sm text-ink/40">
+                      Ao enviar, o WhatsApp será aberto com sua mensagem pronta para envio.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-green-700 transition-all flex items-center justify-center gap-2"
-                      >
-                        <MessageCircle size={20} />
-                        Abrir WhatsApp
-                      </a>
-                      <button
-                        onClick={() => setIsSubmitted(false)}
-                        className="bg-white text-slate-600 border border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
-                      >
-                        <RefreshCcw size={20} />
-                        Enviar outra mensagem
-                      </button>
-                    </div>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="py-10 text-center"
+                >
+                  <motion.div
+                    initial={{ scale: 0, rotate: -30 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.1 }}
+                    className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-[#25D366] text-ink"
+                  >
+                    <CheckCircle2 size={48} />
                   </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
+                  <h3 className="font-display text-4xl font-bold tracking-tight">Mensagem pronta!</h3>
+                  <p className="mx-auto mb-10 mt-4 max-w-sm text-lg text-ink/60">
+                    O WhatsApp foi aberto com sua mensagem. Caso não tenha aberto, clique no botão abaixo.
+                  </p>
+                  <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                    <Button href={whatsappUrl} variant="whatsapp" size="md" icon={<MessageCircle size={18} />}>
+                      Abrir WhatsApp
+                    </Button>
+                    <Button onClick={() => setIsSubmitted(false)} variant="ghost" size="md" arrow={false} icon={<RefreshCcw size={18} />} className="text-ink">
+                      Enviar outra mensagem
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-12"
-          >
-            <div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Informações de Contato</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                    <Phone size={28} />
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-sm font-bold uppercase">Telefone / WhatsApp</p>
-                    <a href="tel:+5565999047060" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">(65) 99904-7060</a>
-                    <a href="tel:+5565992087365" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">(65) 99208-7365</a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                    <Mail size={28} />
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-sm font-bold uppercase">E-mail</p>
-                    <a href="mailto:mstendas2016@gmail.com" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors break-all">mstendas2016@gmail.com</a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                    <MapPin size={28} />
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-sm font-bold uppercase">Localização</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=MS+Tendas+R.+Nova+Andradina+130+Cuiab%C3%A1" target="_blank" rel="noopener noreferrer" className="block text-slate-900 font-extrabold text-xl hover:text-blue-600 transition-colors">R. Nova Andradina, 130<span className="block text-base font-semibold text-slate-600">Jd. Presidente I, Cuiabá - MT, 78090-130</span></a>
-                  </div>
-                </div>
+        <motion.aside
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-4 lg:col-span-5"
+        >
+          {contacts.map((contact) => (
+            <div key={contact.label} className="flex gap-5 rounded-[2rem] border border-ink/10 bg-white/60 p-6">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lona text-white">
+                <contact.icon size={22} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-[0.15em] text-ink/50">{contact.label}</p>
+                {contact.lines.map((line) => (
+                  <a
+                    key={line.text}
+                    href={line.href}
+                    {...(line.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                    className="mt-1 block break-words text-lg font-bold transition-colors hover:text-lona"
+                  >
+                    {line.text}
+                  </a>
+                ))}
               </div>
             </div>
+          ))}
 
-            <div className="bg-blue-900 p-10 rounded-3xl text-white relative overflow-hidden">
-              <div className="relative z-10">
-                <h4 className="text-2xl font-bold mb-4">Atendimento Imediato</h4>
-                <p className="text-blue-100 mb-8 leading-relaxed opacity-90">
-                  Nossa equipe está online agora para tirar suas dúvidas e enviar seu orçamento em tempo recorde.
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-3">
-                    <div className="w-12 h-12 rounded-full border-4 border-blue-900 bg-slate-200 overflow-hidden">
-                      <img src="/images/marcos.jpeg" alt="Marcos, da equipe MS Tendas" />
-                    </div>
-                    <div className="w-12 h-12 rounded-full border-4 border-blue-900 bg-slate-200 overflow-hidden">
-                      <img src="/images/julio.jpeg" alt="Júlio, da equipe MS Tendas" />
-                    </div>
-                  </div>
-                  <p className="text-sm font-medium text-blue-100">Equipe de prontidão</p>
+          <div className="relative overflow-hidden rounded-[2rem] bg-lona p-8 text-white">
+            <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-lona/50 blur-3xl" />
+            <div className="relative">
+              <h4 className="font-display text-2xl font-bold">Prefere falar direto?</h4>
+              <p className="mb-6 mt-2 text-white/60">Chame a nossa equipe no WhatsApp e tire suas dúvidas.</p>
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex -space-x-3">
+                  <img src="/images/marcos.jpeg" alt="Marcos, da equipe MS Tendas" className="h-12 w-12 rounded-full border-4 border-lona object-cover" />
+                  <img src="/images/julio.jpeg" alt="Júlio, da equipe MS Tendas" className="h-12 w-12 rounded-full border-4 border-lona object-cover" />
                 </div>
+                <p className="text-sm text-white/70">Marcos e Júlio</p>
               </div>
-              <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-blue-800 rounded-full opacity-50 blur-3xl"></div>
+              <Button
+                href={getWhatsAppUrl('Olá! Vim pelo site e gostaria de tirar uma dúvida.')}
+                variant="whatsapp"
+                size="md"
+                icon={<MessageCircle size={18} />}
+              >
+                Chamar no WhatsApp
+              </Button>
             </div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
+          </div>
+        </motion.aside>
+      </section>
+    </>
   );
 };
 

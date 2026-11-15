@@ -1,84 +1,73 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Check, MessageCircle } from 'lucide-react';
+import PageHero from '../components/PageHero';
+import TentSizes from '../components/TentSizes';
+import TriangleReveal from '../components/motion/TriangleReveal';
+import Button from '../components/Button';
+import { tendas } from '../data/tendas';
+import { getWhatsAppUrl } from '../config/site';
+import { cn } from '../lib/utils';
 
 const Tendas = () => {
-  const tendas = [
-    {
-      title: "Tendas 3x3",
-      desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
-      image: "/images/tenda20.jpeg",
-      features: ["Montagem Rápida", "Estrutura Galvanizada", "Ideal para Espaços Compactos"]
-    },
-    {
-      title: "Tendas 4x4",
-      desc: "A mais versátil para festas particulares e áreas de convivência.",
-      image: "/images/tenda11.jpg",
-      features: ["Ótima para Festas e Confraternizações", "Calhas de Escoamento", "Design Moderno"]
-    },
-    {
-      title: "Tendas 5x5",
-      desc: "Estrutura robusta para grandes eventos corporativos e feiras.",
-      image: "/images/tenda14.jpeg",
-      features: ["Vão Livre Total", "Alta Resistência a Ventos", "Comporta Grandes Públicos"]
-    }
-  ];
-
   return (
-    <div className="pt-32 pb-24 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">Nossas Tendas</h1>
-          <p className="text-xl text-slate-600 leading-relaxed">
-            Estruturas modulares de alta qualidade, projetadas para oferecer segurança e conforto em qualquer tipo de evento.
-          </p>
-        </div>
+    <>
+      <PageHero
+        eyebrow="Catálogo"
+        title="Nossas Tendas"
+        subtitle="Estruturas modulares de alta qualidade, projetadas para oferecer segurança e conforto em qualquer tipo de evento."
+      />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tendas.map((tenda, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
+      <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
+        <TentSizes />
+      </section>
+
+      <section className="mx-auto max-w-7xl space-y-20 px-5 pb-32 sm:px-8 lg:space-y-28">
+        {tendas.map((tenda, i) => (
+          <article key={tenda.id} className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+            <TriangleReveal className={cn('h-80 overflow-hidden rounded-[2rem] sm:h-[28rem] lg:col-span-7', i % 2 === 1 && 'lg:order-2')}>
+              <img src={tenda.image} alt={tenda.title} loading="lazy" className="h-full w-full object-cover" />
+            </TriangleReveal>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 flex flex-col group"
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className={cn('lg:col-span-5', i % 2 === 1 && 'lg:order-1')}
             >
-              <div className="h-64 overflow-hidden">
-                <img 
-                  src={tenda.image} 
-                  alt={tenda.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-8 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{tenda.title}</h3>
-                  <p className="text-slate-600 mb-6 text-sm leading-relaxed">{tenda.desc}</p>
-                  <ul className="grid grid-cols-1 gap-3 mb-8">
-                    {tenda.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                        <CheckCircle2 size={16} className="text-green-500 shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Link 
-                  to="/contato" 
-                  className="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all group/btn"
+              <p className="font-display text-7xl font-extrabold tracking-tight text-lona">{tenda.id.replace('x', '×')}</p>
+              <p className="mt-1 text-sm font-semibold uppercase tracking-[0.15em] text-ink/50">
+                {tenda.metros * tenda.metros} m² de área coberta
+              </p>
+              <h2 className="mt-4 font-display text-3xl font-extrabold">{tenda.title}</h2>
+              <p className="mt-3 text-lg text-ink-soft">{tenda.desc}</p>
+              <ul className="my-8 space-y-3">
+                {tenda.features.map((f) => (
+                  <li key={f} className="flex items-center gap-3 font-medium">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lona-sky text-lona">
+                      <Check size={14} strokeWidth={3} />
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  href={getWhatsAppUrl(`Olá! Vim pelo site e gostaria de um orçamento da ${tenda.title}.`)}
+                  variant="whatsapp"
+                  icon={<MessageCircle size={18} />}
                 >
-                  Solicitar Orçamento
-                  <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
+                  Orçar no WhatsApp
+                </Button>
+                <Button to="/contato" variant="ghost" className="text-ink">
+                  Formulário
+                </Button>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
+          </article>
+        ))}
+      </section>
+    </>
   );
 };
 

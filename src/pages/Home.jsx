@@ -1,328 +1,304 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Zap, 
-  ShieldCheck, 
-  DollarSign, 
-  ArrowRight, 
-  MessageCircle, 
-  CheckCircle2,
-  ChevronRight,
-  CalendarCheck,
-  Tent,
-  Star
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
+import { MessageCircle, Star, Zap, ShieldCheck, BadgeDollarSign } from 'lucide-react';
+import TentDraw from '../components/motion/TentDraw';
+import TentBuild from '../components/motion/TentBuild';
+import TriangleReveal from '../components/motion/TriangleReveal';
+import TentSizes from '../components/TentSizes';
+import HorizontalGallery from '../components/HorizontalGallery';
+import Button from '../components/Button';
+import { TentMark } from '../components/Logo';
+import { getWhatsAppUrl, GOOGLE_RATING, GOOGLE_REVIEWS_COUNT } from '../config/site';
+import { cn } from '../lib/utils';
 
-// Atualize conforme o widget de avaliações do Google
-const GOOGLE_RATING = "5,0";
-const GOOGLE_REVIEWS_COUNT = 154;
+const ease = [0.22, 1, 0.36, 1];
 
-const Home = () => {
-  const tendas = [
-    {
-      title: "Tendas 3x3",
-      desc: "Ideal para pequenos eventos, recepções e stands de vendas.",
-      image: "/images/tenda13.jpg",
-      features: ["Lona Anti-chamas", "Estrutura Galvanizada", "Montagem Rápida"]
-    },
-    {
-      title: "Tendas 4x4",
-      desc: "A mais versátil para festas particulares e áreas de convivência.",
-      image: "/images/tenda17.jpg",
-      features: ["Ótima para Festas e Confraternizações", "Calhas de Escoamento", "Design Moderno"]
-    },
-    {
-      title: "Tendas 5x5",
-      desc: "Estrutura robusta para grandes eventos corporativos e feiras.",
-      image: "/images/tenda16.jpg",
-      features: ["Vão Livre Total", "Alta Resistência a Ventos", "Ideal para B2B"]
-    }
-  ];
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay, ease },
+});
+
+const inViewUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-10% 0px' },
+  transition: { duration: 0.8, delay, ease },
+});
+
+const Eyebrow = ({ children, className }) => (
+  <p className={cn('mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-lona', className)}>
+    <TentMark className="h-5 w-5" />
+    {children}
+  </p>
+);
+
+const Stars = ({ size = 16 }) => (
+  <span className="flex" aria-hidden="true">
+    {[...Array(5)].map((_, i) => (
+      <Star key={i} size={size} className="fill-amber-400 text-amber-400" />
+    ))}
+  </span>
+);
+
+const sectionTitle = 'font-display text-[clamp(2.2rem,4.8vw,4rem)] font-extrabold leading-[1] tracking-tight';
+
+const Hero = () => (
+  <section className="relative overflow-hidden">
+    <div className="mx-auto grid max-w-7xl items-center gap-6 px-5 pb-16 pt-28 sm:px-8 lg:min-h-[100svh] lg:grid-cols-12 lg:gap-10 lg:pb-12 lg:pt-24">
+      <div className="lg:col-span-6">
+        <motion.div {...fadeUp(0)}>
+          <Eyebrow>Aluguel de tendas · Cuiabá e região</Eyebrow>
+        </motion.div>
+        <motion.h1
+          {...fadeUp(0.1)}
+          className="font-display text-[clamp(2.9rem,6vw,5.4rem)] font-extrabold leading-[0.95] tracking-tight"
+        >
+          A gente monta.
+          <br />
+          <span className="text-lona">Você comemora.</span>
+        </motion.h1>
+        <motion.p {...fadeUp(0.25)} className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+          Tendas piramidais 3x3, 4x4 e 5x5 para festas e eventos corporativos, com montagem no mesmo dia.
+        </motion.p>
+        <motion.div {...fadeUp(0.4)} className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button
+            href={getWhatsAppUrl('Olá! Vim pelo site e gostaria de um orçamento de tenda.')}
+            icon={<MessageCircle size={18} />}
+          >
+            Pedir orçamento
+          </Button>
+          <Button href="#medidas" variant="ghost" className="text-ink">
+            Ver as medidas
+          </Button>
+        </motion.div>
+        <motion.a
+          {...fadeUp(0.55)}
+          href="#avaliacoes"
+          className="mt-8 inline-flex items-center gap-3 rounded-full py-1 pr-3 text-sm transition-colors hover:text-lona"
+        >
+          <Stars />
+          <span>
+            <strong className="font-display text-base">{GOOGLE_RATING}</strong> no Google · {GOOGLE_REVIEWS_COUNT} avaliações
+          </span>
+        </motion.a>
+      </div>
+
+      <div className="relative lg:col-span-6">
+        <div className="absolute inset-x-[8%] bottom-[4%] top-[18%] -z-10 rounded-full bg-lona-sky blur-3xl" />
+        <TentDraw
+          image="/images/tenda7.jpg"
+          alt="Tenda piramidal branca montada sobre o deck de uma piscina em área de lazer"
+          delay={0.3}
+          className="mx-auto max-w-[34rem] text-ink"
+        />
+      </div>
+    </div>
+  </section>
+);
+
+const facts = [
+  'Montagem no mesmo dia',
+  'Tendas 3x3, 4x4 e 5x5',
+  `${GOOGLE_RATING} no Google · ${GOOGLE_REVIEWS_COUNT} avaliações`,
+  'Cuiabá e região',
+];
+
+const FactsStrip = () => (
+  <section className="bg-lona text-white">
+    <ul className="mx-auto flex max-w-7xl flex-col items-start gap-3 px-5 py-6 sm:px-8 md:flex-row md:items-center md:justify-between">
+      {facts.map((fact, i) => (
+        <motion.li key={fact} {...inViewUp(i * 0.08)} className="flex items-center gap-3 font-display text-lg font-bold">
+          <TentMark className="h-5 w-5 text-coral" />
+          {fact}
+        </motion.li>
+      ))}
+    </ul>
+  </section>
+);
+
+const Medidas = () => (
+  <section id="medidas" className="scroll-mt-20 py-24 lg:py-32">
+    <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <motion.div {...inViewUp()} className="mb-12 max-w-3xl">
+        <Eyebrow>Medidas</Eyebrow>
+        <h2 className={sectionTitle}>Qual tenda cabe no seu evento?</h2>
+        <p className="mt-5 text-lg text-ink-soft">
+          Compare as três medidas lado a lado, na mesma escala, e escolha a que ocupa melhor o seu espaço.
+        </p>
+      </motion.div>
+      <TentSizes />
+    </div>
+  </section>
+);
+
+const steps = [
+  {
+    title: 'Peça seu orçamento',
+    desc: 'Fale com a gente pelo WhatsApp ou pelo formulário e conte como será o seu evento.',
+  },
+  {
+    title: 'Combine data e local',
+    desc: 'Definimos juntos a medida ideal da tenda, o dia e o endereço da montagem.',
+  },
+  {
+    title: 'Nós montamos tudo',
+    desc: 'Nossa equipe chega no horário combinado e deixa a estrutura pronta para o seu evento.',
+  },
+];
+
+const ComoMontamos = () => {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const done = useMotionValue(1);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const progress = reduce ? done : scrollYProgress;
+  const [active, setActive] = useState(reduce ? 2 : 0);
+
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (!reduce) setActive(Math.min(2, Math.floor(v * 3)));
+  });
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans scroll-smooth">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-transparent to-transparent opacity-70"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-bold mb-6 border border-blue-100">
-                <Zap size={16} className="fill-blue-700" />
-                MONTAGEM NO MESMO DIA
-              </div>
-              <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6">
-                Estruturas que <span className="text-blue-600">elevam</span> seu evento.
-              </h1>
-              <p className="text-xl text-slate-600 mb-8 leading-relaxed max-w-xl">
-                Tendas piramidais de alta resistência para grandes empresas e festas particulares em Cuiabá. Agilidade, segurança e o melhor custo-benefício.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  to="/contato" 
-                  className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 group"
+    <section ref={ref} className={cn('relative bg-white', !reduce && 'h-[300vh]')}>
+      <div className={cn('flex flex-col justify-center', !reduce && 'sticky top-0 h-[100svh]')}>
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-4 px-5 pb-6 pt-20 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:py-16">
+          <div className="order-2 lg:order-1">
+            <Eyebrow>Como montamos</Eyebrow>
+            <h2 className={cn(sectionTitle, 'mb-5 lg:mb-12')}>Do orçamento à tenda de pé.</h2>
+            <ol className="space-y-2 lg:space-y-3">
+              {steps.map((step, i) => (
+                <li
+                  key={step.title}
+                  className={cn(
+                    'rounded-3xl border-2 px-5 py-3 transition-all duration-500 sm:p-6',
+                    i === active ? 'border-lona bg-lona-sky/50' : 'border-transparent opacity-45'
+                  )}
+                  aria-current={i === active ? 'step' : undefined}
                 >
-                  Orçamento Rápido
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <a 
-                  href="https://wa.me/5565999047060" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-white text-slate-900 border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition-all"
-                >
-                  <MessageCircle className="text-green-500" />
-                  Falar no WhatsApp
-                </a>
-              </div>
-              
-              <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-slate-500 font-medium">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-blue-600" />
-                  Empresa Registrada
-                </div>
-                <a href="#avaliacoes" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
-                  <span className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} className="text-amber-400 fill-amber-400" />
-                    ))}
-                  </span>
-                  <span>
-                    <strong className="text-slate-900">{GOOGLE_RATING}</strong> no Google
-                    {GOOGLE_REVIEWS_COUNT && <> · {GOOGLE_REVIEWS_COUNT} avaliações</>}
-                  </span>
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                <img 
-                  src="/images/tenda2.jpg" 
-                  alt="Tenda Piramidal MS Tendas" 
-                  className="w-full h-[500px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                <div className="absolute bottom-6 sm:bottom-20 left-6 right-6 text-white">
-                  <p className="text-sm font-bold uppercase tracking-widest mb-1 opacity-80">Destaque</p>
-                  <h3 className="text-2xl font-bold">Conte com a MS, para tornar seu evento inesquecível!</h3>
-                </div>
-              </div>
-              
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl border border-slate-100 hidden sm:block">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                    <DollarSign size={24} />
-                  </div>
-                  <div>
-                    <p className="text-slate-500 text-xs font-bold uppercase">Preço Imbatível</p>
-                    <p className="text-slate-900 font-extrabold text-lg">Cobrimos Orçamentos</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+                  <p className="flex items-baseline gap-3 font-display text-xl font-extrabold sm:text-2xl">
+                    <span className="text-lona">0{i + 1}</span>
+                    {step.title}
+                  </p>
+                  <p className={cn('mt-1.5 text-ink-soft', i !== active && 'hidden lg:block')}>{step.desc}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="order-1 lg:order-2">
+            <TentBuild progress={progress} className="mx-auto h-[24vh] w-auto max-w-full text-ink sm:h-[34vh] lg:h-auto lg:w-full lg:max-w-[30rem]" />
           </div>
         </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Por que a MS Tendas?</h2>
-            <p className="text-4xl font-extrabold text-slate-900 mb-6">Inovação e agilidade para o seu evento não parar.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Zap size={30} className="text-blue-600" />,
-                title: "Montagem Express",
-                desc: "Nossa equipe é treinada para montagens rápidas e seguras, garantindo que sua estrutura esteja pronta no mesmo dia."
-              },
-              {
-                icon: <ShieldCheck size={30} className="text-blue-600" />,
-                title: "Segurança Total",
-                desc: "Estruturas galvanizadas e lonas anti-chamas. Segurança em primeiro lugar para seus convidados."
-              },
-              {
-                icon: <DollarSign size={30} className="text-blue-600" />,
-                title: "Preço Justo",
-                desc: "Trabalhamos com transparência e os melhores preços da região, sem abrir mão da qualidade premium."
-              }
-            ].map((feature, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ y: -10 }}
-                className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-xl transition-all"
-              >
-                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Catalog Preview */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Catálogo Digital</h2>
-              <p className="text-4xl font-extrabold text-slate-900">Nossas Soluções em Tendas</p>
-            </div>
-            <Link to="/tendas" className="text-blue-600 font-bold flex items-center gap-2 hover:gap-3 transition-all">
-              Ver todas as medidas <ChevronRight size={20} />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {tendas.map((tenda, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={tenda.image} 
-                    alt={tenda.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{tenda.title}</h3>
-                  <p className="text-slate-600 mb-6 text-sm leading-relaxed">{tenda.desc}</p>
-                  <ul className="space-y-2 mb-8">
-                    {tenda.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                        <CheckCircle2 size={16} className="text-green-500 shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link 
-                    to="/contato" 
-                    className="block w-full text-center py-4 rounded-xl border-2 border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition-all"
-                  >
-                    Solicitar Preço
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Como Funciona */}
-      <section className="py-24 bg-slate-900 relative overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-600 rounded-full opacity-20 blur-3xl"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-blue-400 font-bold tracking-widest uppercase text-sm mb-4">Como Funciona</h2>
-            <p className="text-4xl font-extrabold text-white">Do orçamento à montagem, sem complicação.</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <MessageCircle size={30} />,
-                title: "Peça seu orçamento",
-                desc: "Fale com a gente pelo WhatsApp ou pelo formulário e conte como será o seu evento."
-              },
-              {
-                icon: <CalendarCheck size={30} />,
-                title: "Combine data e local",
-                desc: "Definimos juntos a medida ideal da tenda, o dia e o endereço da montagem."
-              },
-              {
-                icon: <Tent size={30} />,
-                title: "Nós montamos tudo",
-                desc: "Nossa equipe chega no horário combinado e deixa a estrutura pronta para o seu evento."
-              }
-            ].map((step, i) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative p-8 rounded-3xl bg-white/5 border border-white/10"
-              >
-                <span className="absolute top-6 right-8 text-6xl font-black text-white/10">{i + 1}</span>
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-6">
-                  {step.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* GOOGLE REVIEWS */}
-      <section id="avaliacoes" className="py-20 bg-white scroll-mt-20">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Avaliações Reais</h2>
-          <p className="text-4xl font-extrabold text-slate-900 mb-6">O que nossos clientes dizem?</p>
-        </div>
-        <div className="max-w-6xl mx-auto">
-          <div className="elfsight-app-6d90414c-6778-4e36-9c24-4aa0362d68eb" data-elfsight-app-lazy></div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-blue-600 relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500 rounded-full opacity-40 blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-800 rounded-full opacity-40 blur-3xl"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-8">Pronto para elevar o nível do seu evento?</h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
-            Entre em contato agora e receba um orçamento personalizado para o seu evento.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link 
-              to="/contato" 
-              className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-50 transition-all shadow-2xl"
-            >
-              Solicitar Orçamento
-            </Link>
-            <a 
-              href="https://wa.me/5565999047060" 
-              target="_blank"
-                  rel="noopener noreferrer"
-              className="bg-green-500 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-2xl flex items-center justify-center gap-3"
-            >
-              <MessageCircle size={28} />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
+
+const diferenciais = [
+  {
+    icon: Zap,
+    title: 'Montagem no mesmo dia',
+    desc: 'Equipe treinada para montagens rápidas e seguras: sua estrutura pronta no mesmo dia.',
+    image: '/images/tenda1.jpg',
+    alt: 'Tenda montada na Arena Pantanal',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Segurança para os convidados',
+    desc: 'Estruturas galvanizadas e lonas anti-chamas, montadas com cuidado em cada detalhe.',
+    image: '/images/tenda16.jpg',
+    alt: 'Tendas com cortinas brancas montadas em área de bar',
+  },
+  {
+    icon: BadgeDollarSign,
+    title: 'Preço justo',
+    desc: 'Transparência e os melhores preços da região, sem abrir mão da qualidade. Cobrimos orçamentos.',
+    image: '/images/tenda8.jpg',
+    alt: 'Tendas iluminadas à noite ao redor de uma piscina',
+  },
+];
+
+const Diferenciais = () => (
+  <section className="py-24 lg:py-32">
+    <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12">
+      <motion.div {...inViewUp()} className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
+        <Eyebrow>Por que a MS Tendas</Eyebrow>
+        <h2 className={sectionTitle}>Feito para o evento não parar.</h2>
+      </motion.div>
+      <div className="space-y-6 lg:col-span-8">
+        {diferenciais.map((item, i) => (
+          <article key={item.title} className="grid items-center gap-6 rounded-[2rem] bg-white p-4 sm:grid-cols-5 sm:p-5">
+            <TriangleReveal className={cn('h-56 overflow-hidden rounded-[1.5rem] sm:col-span-2 sm:h-48', i % 2 === 1 && 'sm:order-2')}>
+              <img src={item.image} alt={item.alt} loading="lazy" className="h-full w-full object-cover" />
+            </TriangleReveal>
+            <motion.div {...inViewUp(0.15)} className={cn('px-2 pb-2 sm:col-span-3 sm:pb-0', i % 2 === 1 && 'sm:order-1')}>
+              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-lona-sky text-lona">
+                <item.icon size={22} />
+              </span>
+              <h3 className="font-display text-2xl font-extrabold">{item.title}</h3>
+              <p className="mt-2 text-ink-soft">{item.desc}</p>
+            </motion.div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const galeria = [
+  { src: '/images/tenda1.jpg', alt: 'Tenda na Arena Pantanal' },
+  { src: '/images/tenda12.jpg', alt: 'Tendas com cortinas em jardim florido' },
+  { src: '/images/tenda19.jpeg', alt: 'Tendas em evento do Sebrae' },
+  { src: '/images/tenda8.jpg', alt: 'Tendas iluminadas à noite ao redor de uma piscina' },
+  { src: '/images/tenda37.jpeg', alt: 'Tendas montadas em área com árvores e bancos' },
+  { src: '/images/tenda4.jpg', alt: 'Tendas montadas na Polícia Rodoviária Federal' },
+  { src: '/images/tenda33.jpeg', alt: 'Tenda em jardim com flores laranjas' },
+  { src: '/images/tenda5.jpg', alt: 'Tendas em área aberta com jardim' },
+];
+
+const GaleriaHeader = () => (
+  <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+    <div>
+      <Eyebrow>Galeria</Eyebrow>
+      <h2 className={sectionTitle}>Já montamos por aqui.</h2>
+    </div>
+    <Button to="/galeria" variant="ghost" size="md" className="self-start text-ink md:self-auto">
+      Ver todas as fotos
+    </Button>
+  </div>
+);
+
+const Avaliacoes = () => (
+  <section id="avaliacoes" className="scroll-mt-20 bg-lona-sky py-24 lg:py-32">
+    <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <motion.div {...inViewUp()}>
+          <Eyebrow>Avaliações reais</Eyebrow>
+          <h2 className={sectionTitle}>Quem contrata, recomenda.</h2>
+        </motion.div>
+        <div className="flex items-center gap-4">
+          <span className="font-display text-6xl font-extrabold tracking-tight text-lona">{GOOGLE_RATING}</span>
+          <span>
+            <Stars size={18} />
+            <span className="mt-1 block text-sm text-ink-soft">{GOOGLE_REVIEWS_COUNT} avaliações no Google</span>
+          </span>
+        </div>
+      </div>
+      <div className="elfsight-app-6d90414c-6778-4e36-9c24-4aa0362d68eb" data-elfsight-app-lazy></div>
+    </div>
+  </section>
+);
+
+const Home = () => (
+  <>
+    <Hero />
+    <FactsStrip />
+    <Medidas />
+    <ComoMontamos />
+    <Diferenciais />
+    <HorizontalGallery images={galeria} header={<GaleriaHeader />} />
+    <Avaliacoes />
+  </>
+);
 
 export default Home;
