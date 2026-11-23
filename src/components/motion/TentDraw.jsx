@@ -7,7 +7,10 @@ const ease = [0.22, 1, 0.36, 1];
 
 // Assinatura da marca: o contorno da tenda se desenha e, ao fechar, a foto "preenche" a tenda.
 // Sem `image`, desenha só o contorno (uso decorativo).
-const TentDraw = ({ image, alt = '', className, stroke = 'currentColor', delay = 0, inView = false }) => {
+// `imageBox` reposiciona a foto no viewBox 400x400 (útil para fotos largas em que a tenda ocupa toda a largura).
+const DEFAULT_BOX = { x: 0, y: 0, width: 400, height: 400 };
+
+const TentDraw = ({ image, alt = '', className, stroke = 'currentColor', delay = 0, inView = false, imageBox = DEFAULT_BOX }) => {
   const reduce = useReducedMotion();
   const clipId = useId();
 
@@ -50,10 +53,10 @@ const TentDraw = ({ image, alt = '', className, stroke = 'currentColor', delay =
           <g clipPath={`url(#${clipId})`}>
             <motion.image
               href={image}
-              x="0"
-              y="0"
-              width="400"
-              height="400"
+              x={imageBox.x}
+              y={imageBox.y}
+              width={imageBox.width}
+              height={imageBox.height}
               preserveAspectRatio="xMidYMid slice"
               variants={photo}
               style={{ transformOrigin: '200px 200px' }}

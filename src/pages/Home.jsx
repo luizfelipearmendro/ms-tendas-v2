@@ -87,8 +87,9 @@ const Hero = () => (
       <div className="relative lg:col-span-6">
         <div className="absolute inset-x-[8%] bottom-[4%] top-[18%] -z-10 rounded-full bg-lona-sky blur-3xl" />
         <TentDraw
-          image="/images/tenda7.jpg"
-          alt="Tenda piramidal branca montada sobre o deck de uma piscina em área de lazer"
+          image="/images/tenda11.jpg"
+          imageBox={{ x: -40, y: 50, width: 480, height: 340 }}
+          alt="Tenda piramidal branca montada em praça com piso quadriculado e prédios ao fundo"
           delay={0.3}
           className="mx-auto max-w-[34rem] text-ink"
         />
